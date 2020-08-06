@@ -8,20 +8,18 @@
     :font-size="11"
     :padding="3">
     <ev-toolbar-item
-      icon="file-plus"
-      label="New"
-      tooltip="New File" />
-
-    <ev-toolbar-item
+      id="open-file"
       icon="folder-open"
       label="Open"
       tooltip="Open File"
-      @click.native="handleOpenFile" />
+      @click.native="$evmenu.$emit('click', 'open-file')" />
 
     <ev-toolbar-item
+      id="save-file"
       icon="save"
       label="Save"
-      tooltip="Save File" />
+      tooltip="Save File"
+      @click.native="$evmenu.$emit('click', 'save-file')" />
   </ev-toolbar>
 </template>
 
@@ -32,12 +30,6 @@ export default {
   components: {
     EvToolbar,
     EvToolbarItem
-  },
-
-  methods: {
-    handleOpenFile() {
-      this.$evmenu.$emit('input', 'open-file');
-    }
   }
 };
 </script>

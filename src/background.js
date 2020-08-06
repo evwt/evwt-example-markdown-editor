@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import {
-  app, dialog, protocol, BrowserWindow
+  app, dialog, protocol, BrowserWindow, ipcMain
 } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
@@ -17,6 +17,10 @@ let windows = new Map();
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
+
+ipcMain.handle('save-file', async (e, filePath, fileBytes) => {
+  fs.writeFileSync(filePath, fileBytes);
+});
 
 function createWindow() {
   // Create the browser window.

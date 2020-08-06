@@ -60,8 +60,13 @@ export default {
   },
 
   created() {
-    ipcRenderer.on('eeme:open-file', (event, { fileContents }) => {
+    ipcRenderer.on('eeme:open-file', (event, { filePath, fileContents }) => {
       this.markdown = fileContents;
+      this.filePath = filePath;
+    });
+
+    this.$evmenu.$on('input:save-file', () => {
+      ipcRenderer.invoke('save-file', this.filePath, this.markdown);
     });
   }
 };

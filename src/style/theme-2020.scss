@@ -24,7 +24,9 @@
     fill: var(--color-gray);
   }
 
-  &:hover {
+  &:hover,
+  &:active,
+  &.ev-active {
     color: var(--color-tint);
 
     .ev-icon svg {

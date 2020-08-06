@@ -11,6 +11,11 @@ export default [
         accelerator: 'CmdOrCtrl+O',
         label: 'Open...'
       },
+      {
+        id: 'save-file',
+        accelerator: 'CmdOrCtrl+S',
+        label: 'Save'
+      },
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
   },
