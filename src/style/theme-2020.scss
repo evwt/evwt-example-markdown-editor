@@ -1,3 +1,20 @@
+:root {
+  --color-tint: hsl(213, 99%, 50%);
+  --color-dark: hsl(0, 1%, 25%);
+  --color-light: hsl(0, 0, 95%);
+  --color-gray-30: hsl(0, 1%, 30%);
+  --color-gray-80: hsl(0, 1%, 80%);
+  --color-gray-85: hsl(0, 1%, 85%);
+}
+
+body,
+input,
+textarea {
+  font-family: system-ui;
+  font-size: 13px;
+  color: var(--color-gray);
+}
+
 .ev-pane-toolbar {
   background: #eee;
   border-bottom: 1px solid #ddd;
@@ -17,15 +34,15 @@
 
 .ev-toolbar .ev-toolbar-item {
   background: #fff;
-  border: 1px solid var(--color-gray-light);
+  border: 1px solid var(--color-gray-85);
   border-radius: 5px;
 
   .ev-icon svg {
-    fill: var(--color-gray);
+    fill: var(--color-gray-30);
   }
 
-  &:hover,
   &:active,
+  &.ev-selected,
   &.ev-active {
     color: var(--color-tint);
 
@@ -34,3 +51,4 @@
     }
   }
 }
+

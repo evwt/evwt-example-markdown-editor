@@ -33,7 +33,13 @@ export default {
   data() {
     return {
       markdown: '',
-      appLayout: {
+      filePath: ''
+    };
+  },
+
+  computed: {
+    appLayout() {
+      return {
         direction: 'row',
         sizes: ['auto', '1fr'],
         panes: [
@@ -44,7 +50,7 @@ export default {
           {
             name: 'main',
             direction: 'column',
-            sizes: ['1fr', '1fr'],
+            sizes: ['1fr', this.previewSize],
             panes: [
               {
                 name: 'editor'
@@ -55,14 +61,26 @@ export default {
             ]
           }
         ]
+      };
+    },
+
+    previewSize() {
+      let size = '1fr';
+
+      if (!this.$evmenu.get('show-preview').checked) {
+        size = 0;
       }
-    };
+
+      return size;
+    }
   },
 
   created() {
     ipcRenderer.on('eeme:open-file', (event, { filePath, fileContents }) => {
       this.markdown = fileContents;
       this.filePath = filePath;
+      this.$evmenu.get('save-file').enabled = true;
+      this.$evmenu.get('show-preview').checked = true;
     });
 
     this.$evmenu.$on('input:save-file', () => {

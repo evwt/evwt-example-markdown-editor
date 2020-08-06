@@ -8,18 +8,24 @@
     :font-size="11"
     :padding="3">
     <ev-toolbar-item
-      id="open-file"
+      menu-id="open-file"
       icon="folder-open"
       label="Open"
       tooltip="Open File"
       @click.native="$evmenu.$emit('click', 'open-file')" />
 
     <ev-toolbar-item
-      id="save-file"
+      menu-id="save-file"
       icon="save"
       label="Save"
       tooltip="Save File"
       @click.native="$evmenu.$emit('click', 'save-file')" />
+
+    <ev-toolbar-item
+      menu-id="show-preview"
+      icon="window-maximize"
+      label="Sidebar"
+      tooltip="Show Sidebar" />
   </ev-toolbar>
 </template>
 

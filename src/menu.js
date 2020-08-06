@@ -14,7 +14,8 @@ export default [
       {
         id: 'save-file',
         accelerator: 'CmdOrCtrl+S',
-        label: 'Save'
+        label: 'Save',
+        enabled: false
       },
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
@@ -41,7 +42,14 @@ export default [
     submenu: [
       { role: 'toggledevtools' },
       { type: 'separator' },
-      { role: 'togglefullscreen' }
+      { role: 'togglefullscreen' },
+      { type: 'separator' },
+      {
+        id: 'show-preview',
+        label: 'Show Preview',
+        type: 'checkbox',
+        checked: false
+      }
     ]
   },
   {
