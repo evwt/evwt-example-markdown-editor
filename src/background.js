@@ -1,28 +1,47 @@
-import { app, protocol, BrowserWindow } from 'electron';
+import path from 'path';
+import fs from 'fs';
+import {
+  app, dialog, protocol, BrowserWindow
+} from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import { EvMenu } from 'evwt';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win;
+let windows = new Map();
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } },
+  { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({
+  let win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 640,
+    minHeight: 480,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-    },
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+    }
+  });
+
+  windows.set('main', win);
+
+  EvMenu.activate(win);
+
+  win.on('evmenu:open-file', async () => {
+    let { filePaths } = await dialog.showOpenDialog({
+      properties: ['openFile']
+    });
+
+    openFilePaths(win, filePaths);
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -37,6 +56,7 @@ function createWindow() {
 
   win.on('closed', () => {
     win = null;
+    windows.delete('main');
   });
 }
 
@@ -52,7 +72,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
+  if (windows.size === 0) {
     createWindow();
   }
 });
@@ -86,3 +106,16 @@ if (isDevelopment) {
     });
   }
 }
+
+let openFilePaths = (win, [filePath]) => {
+  if (!filePath) return;
+
+  win.setRepresentedFilename(filePath);
+  let parsedPath = path.parse(filePath);
+  win.setTitle(parsedPath.base);
+
+  fs.readFile(filePath, (err, fileContents) => {
+    if (err) throw err;
+    win.webContents.send('eeme:open-file', { filePath, fileContents: fileContents.toString() });
+  });
+};

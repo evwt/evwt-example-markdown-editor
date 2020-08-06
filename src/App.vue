@@ -1,28 +1,68 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <ev-layout :layout="appLayout">
+    <template v-slot:toolbar>
+      <Toolbar />
+    </template>
+
+    <template v-slot:editor>
+      <Editor v-model="markdown" />
+    </template>
+
+    <template v-slot:preview>
+      <Preview v-model="markdown" />
+    </template>
+  </ev-layout>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { ipcRenderer } from 'electron';
+import { EvLayout } from 'evwt';
+import Editor from '@/components/Editor';
+import Preview from '@/components/Preview';
+import Toolbar from '@/components/Toolbar';
+import '@/style/theme-2020.scss';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld,
+    EvLayout,
+    Editor,
+    Preview,
+    Toolbar
   },
+
+  data() {
+    return {
+      markdown: '',
+      appLayout: {
+        direction: 'row',
+        sizes: ['auto', '1fr'],
+        panes: [
+          {
+            name: 'toolbar',
+            resizable: false
+          },
+          {
+            name: 'main',
+            direction: 'column',
+            sizes: ['1fr', '1fr'],
+            panes: [
+              {
+                name: 'editor'
+              },
+              {
+                name: 'preview'
+              }
+            ]
+          }
+        ]
+      }
+    };
+  },
+
+  created() {
+    ipcRenderer.on('eeme:open-file', (event, { fileContents }) => {
+      this.markdown = fileContents;
+    });
+  }
 };
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
