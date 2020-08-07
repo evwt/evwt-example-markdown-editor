@@ -26,6 +26,20 @@
       icon="window-maximize"
       label="Sidebar"
       tooltip="Show Sidebar" />
+
+    <ev-toolbar-item
+      menu-id="undo"
+      icon="undo-alt"
+      label="Undo"
+      tooltip="Undo Typing"
+      @click.native="$emit('undo')" />
+
+    <ev-toolbar-item
+      menu-id="redo"
+      icon="redo-alt"
+      label="Redo"
+      tooltip="Redo Typing"
+      @click.native="$emit('redo')" />
   </ev-toolbar>
 </template>
 

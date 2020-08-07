@@ -1,11 +1,11 @@
 <template>
   <ev-layout :layout="appLayout">
     <template v-slot:toolbar>
-      <Toolbar />
+      <Toolbar @undo="undo" @redo="redo" />
     </template>
 
     <template v-slot:editor>
-      <Editor v-model="markdown" />
+      <Editor ref="editor" v-model="markdown" />
     </template>
 
     <template v-slot:preview>
@@ -90,6 +90,16 @@ export default {
     this.$evmenu.$on('input:new-window', () => {
       ipcRenderer.invoke('new-window');
     });
+  },
+
+  methods: {
+    undo() {
+      this.$refs.editor.undo();
+    },
+
+    redo() {
+      this.$refs.editor.redo();
+    }
   }
 };
 </script>

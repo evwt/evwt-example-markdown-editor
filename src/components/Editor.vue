@@ -1,6 +1,6 @@
 <template>
   <MonacoEditor
-    ref="editor"
+    ref="monaco"
     v-model="text"
     language="markdown"
     :options="options" />
@@ -51,16 +51,26 @@ export default {
   mounted() {
     // Fit editor to parent
     let sizeObserver = new ResizeObserver(this.handleResize);
-    sizeObserver.observe(this.$refs.editor.$el.parentElement);
+    sizeObserver.observe(this.$refs.monaco.$el.parentElement);
   },
 
   methods: {
+    undo() {
+      let editor = this.$refs.monaco.getEditor();
+      editor.trigger('', 'undo');
+    },
+
+    redo() {
+      let editor = this.$refs.monaco.getEditor();
+      editor.trigger('', 'redo');
+    },
+
     handleResize: throttle(function(entries) {
       let { contentRect } = entries[entries.length - 1];
-      if (this.$refs.editor) {
-        this.$refs.editor.$el.style.width = `${contentRect.width}px`;
-        this.$refs.editor.$el.style.height = `${contentRect.height}px`;
-        this.$refs.editor.getEditor().layout();
+      if (this.$refs.monaco) {
+        this.$refs.monaco.$el.style.width = `${contentRect.width}px`;
+        this.$refs.monaco.$el.style.height = `${contentRect.height}px`;
+        this.$refs.monaco.getEditor().layout();
       }
     }, 20)
   }

@@ -29,8 +29,14 @@ export default [
     label: 'Edit',
     id: 'edit',
     submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
       { role: 'copy' },
+      { role: 'paste' },
       ...(isMac ? [
+        { type: 'separator' },
         {
           label: 'Speech',
           submenu: [
