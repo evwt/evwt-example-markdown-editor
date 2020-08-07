@@ -19,8 +19,7 @@ export default [
       {
         id: 'save-file',
         accelerator: 'CmdOrCtrl+S',
-        label: 'Save',
-        enabled: false
+        label: 'Save'
       },
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
@@ -59,7 +58,7 @@ export default [
         id: 'show-preview',
         label: 'Show Preview',
         type: 'checkbox',
-        checked: false
+        checked: true
       }
     ]
   },

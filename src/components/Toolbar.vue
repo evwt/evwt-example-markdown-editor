@@ -25,7 +25,7 @@
       menu-id="show-preview"
       icon="window-maximize"
       label="Sidebar"
-      tooltip="Show Sidebar" />
+      tooltip="Show Preview" />
 
     <ev-toolbar-item
       icon="undo-alt"

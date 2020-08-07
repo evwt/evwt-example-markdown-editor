@@ -25,6 +25,26 @@ ipcMain.handle('save-file', async (e, filePath, fileBytes) => {
   fs.writeFileSync(filePath, fileBytes);
 });
 
+ipcMain.handle('save-new-file', async (e, fileBytes) => {
+  let win = BrowserWindow.fromWebContents(e.sender);
+
+  let { canceled, filePath } = await dialog.showSaveDialog(win, {
+    securityScopedBookmarks: true,
+    filters: [
+      {
+        name: 'Markdown',
+        extensions: ['md', 'markdown']
+      }
+    ]
+  });
+
+  if (!canceled) {
+    fs.writeFileSync(filePath, fileBytes);
+    finishFileOpening(win, filePath);
+    return filePath;
+  }
+});
+
 ipcMain.handle('new-window', async (e, id) => {
   createWindow(id);
 });
@@ -47,15 +67,22 @@ function createWindow(id = uuidv4()) {
 
   EvMenu.attach(win);
 
-  win.on('evmenu:open-file', async (e) => {
-    console.log(e);
-    let { filePaths } = await dialog.showOpenDialog({
-      properties: ['openFile']
+  win.on('evmenu:open-file', async () => {
+    let { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {
+          name: 'Markdown',
+          extensions: ['md', 'markdown']
+        }
+      ]
     });
 
-    if (filePaths.length) {
-      openFilePath(win, filePaths[0]);
+    if (canceled || filePaths.length === 0) {
+      return;
     }
+
+    readFile(win, filePaths[0]);
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -80,14 +107,14 @@ app.on('second-instance', (event, argv) => {
   if (argv.length >= 2) {
     let filePath = argv[1];
     let win = createWindow(filePath);
-    openFilePath(win, filePath);
+    readFile(win, filePath);
   }
 });
 
 app.on('open-file', (event, filePath) => {
   event.preventDefault();
   let win = createWindow(filePath);
-  openFilePath(win, filePath);
+  readFile(win, filePath);
 });
 
 // Quit when all windows are closed.
@@ -142,15 +169,19 @@ if (isDevelopment) {
   }
 }
 
-let openFilePath = (win, filePath) => {
+let readFile = (win, filePath) => {
   if (!filePath) return;
-
-  win.setRepresentedFilename(filePath);
-  let parsedPath = path.parse(filePath);
-  win.setTitle(parsedPath.base);
 
   fs.readFile(filePath, (err, fileContents) => {
     if (err) throw err;
     win.webContents.send('eeme:open-file', { filePath, fileContents: fileContents.toString() });
   });
+
+  finishFileOpening(win, filePath);
 };
+
+function finishFileOpening(win, filePath) {
+  win.setRepresentedFilename(filePath);
+  let parsedPath = path.parse(filePath);
+  win.setTitle(parsedPath.base);
+}

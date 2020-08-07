@@ -83,8 +83,13 @@ export default {
       this.$evmenu.get('show-preview').checked = true;
     });
 
-    this.$evmenu.$on('input:save-file', () => {
-      ipcRenderer.invoke('save-file', this.filePath, this.markdown);
+    this.$evmenu.$on('input:save-file', async () => {
+      if (this.filePath) {
+        ipcRenderer.invoke('save-file', this.filePath, this.markdown);
+      } else {
+        let filePath = await ipcRenderer.invoke('save-new-file', this.markdown);
+        this.filePath = filePath;
+      }
     });
 
     this.$evmenu.$on('input:new-window', () => {
