@@ -5,14 +5,10 @@ import {
 } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { EvMenu } from 'evwt';
+import { EvMenu, EvWindow } from 'evwt';
 import { v4 as uuidv4 } from 'uuid';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let windows = new Map();
 
 EvMenu.activate();
 
@@ -49,23 +45,23 @@ ipcMain.handle('new-window', async (e, id) => {
   createWindow(id);
 });
 
-function createWindow(id = uuidv4()) {
-  // Create the browser window.
-  let win = new BrowserWindow({
+function createWindow(restoreId = uuidv4()) {
+  let options = {
+    show: false,
     width: 800,
     height: 600,
     minWidth: 640,
     minHeight: 480,
     webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+      nodeIntegration: true
     }
-  });
+  };
 
-  windows.set(id, win);
+  let storedOptions = EvWindow.getStoredOptions(restoreId, options);
+  let win = new BrowserWindow({ ...options, ...storedOptions });
 
   EvMenu.attach(win);
+  EvWindow.startStoringOptions(win, restoreId);
 
   win.on('evmenu:open-file', async () => {
     let { canceled, filePaths } = await dialog.showOpenDialog({
@@ -82,7 +78,11 @@ function createWindow(id = uuidv4()) {
       return;
     }
 
-    readFile(win, filePaths[0]);
+    let newWindow = createWindow(filePaths[0]);
+    newWindow.once('ready-to-show', () => {
+      readFile(newWindow, filePaths[0]);
+      newWindow.show();
+    });
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -91,13 +91,15 @@ function createWindow(id = uuidv4()) {
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol('app');
-    // Load the index.html when not in development
     win.loadURL('app://./index.html');
   }
 
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+
   win.on('closed', () => {
     win = null;
-    windows.delete(id);
   });
 
   return win;
@@ -117,29 +119,20 @@ app.on('open-file', (event, filePath) => {
   readFile(win, filePath);
 });
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (windows.size === 0) {
-    createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow('blank');
   }
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
-    // Install Vue Devtools
     try {
       await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
@@ -149,12 +142,11 @@ app.on('ready', async () => {
 
   // There might already be windows from open-file, so only create a new
   // one if no windows
-  if (windows.size === 0) {
-    createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow('blank');
   }
 });
 
-// Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
     process.on('message', (data) => {
