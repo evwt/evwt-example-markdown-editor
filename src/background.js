@@ -147,6 +147,22 @@ app.on('ready', async () => {
   }
 });
 
+app.on('evmenu:arrange-cascade', () => {
+  EvWindow.arrange.cascade();
+});
+
+app.on('evmenu:arrange-tile', () => {
+  EvWindow.arrange.tile();
+});
+
+app.on('evmenu:arrange-rows', () => {
+  EvWindow.arrange.rows();
+});
+
+app.on('evmenu:arrange-columns', () => {
+  EvWindow.arrange.columns();
+});
+
 if (isDevelopment) {
   if (process.platform === 'win32') {
     process.on('message', (data) => {

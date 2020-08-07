@@ -68,6 +68,28 @@ export default [
     submenu: [
       { role: 'minimize' },
       { role: 'zoom' },
+      { type: 'separator' },
+      {
+        label: 'Arrange',
+        submenu: [
+          {
+            id: 'arrange-cascade',
+            label: 'Cascade'
+          },
+          {
+            id: 'arrange-tile',
+            label: 'Tile'
+          },
+          {
+            id: 'arrange-rows',
+            label: 'Rows'
+          },
+          {
+            id: 'arrange-columns',
+            label: 'Columns'
+          }
+        ]
+      },
       ...(isMac ? [
         { type: 'separator' },
         { role: 'front' },
