@@ -6,12 +6,15 @@ import {
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { EvMenu } from 'evwt';
+import { v4 as uuidv4 } from 'uuid';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let windows = new Map();
+
+EvMenu.activate();
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -22,7 +25,11 @@ ipcMain.handle('save-file', async (e, filePath, fileBytes) => {
   fs.writeFileSync(filePath, fileBytes);
 });
 
-function createWindow() {
+ipcMain.handle('new-window', async (e, id) => {
+  createWindow(id);
+});
+
+function createWindow(id = uuidv4()) {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -36,16 +43,19 @@ function createWindow() {
     }
   });
 
-  windows.set('main', win);
+  windows.set(id, win);
 
-  EvMenu.activate(win);
+  EvMenu.attach(win);
 
-  win.on('evmenu:open-file', async () => {
+  win.on('evmenu:open-file', async (e) => {
+    console.log(e);
     let { filePaths } = await dialog.showOpenDialog({
       properties: ['openFile']
     });
 
-    openFilePaths(win, filePaths);
+    if (filePaths.length) {
+      openFilePath(win, filePaths[0]);
+    }
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -60,9 +70,25 @@ function createWindow() {
 
   win.on('closed', () => {
     win = null;
-    windows.delete('main');
+    windows.delete(id);
   });
+
+  return win;
 }
+
+app.on('second-instance', (event, argv) => {
+  if (argv.length >= 2) {
+    let filePath = argv[1];
+    let win = createWindow(filePath);
+    openFilePath(win, filePath);
+  }
+});
+
+app.on('open-file', (event, filePath) => {
+  event.preventDefault();
+  let win = createWindow(filePath);
+  openFilePath(win, filePath);
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -93,7 +119,12 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
-  createWindow();
+
+  // There might already be windows from open-file, so only create a new
+  // one if no windows
+  if (windows.size === 0) {
+    createWindow();
+  }
 });
 
 // Exit cleanly on request from parent process in development mode.
@@ -111,7 +142,7 @@ if (isDevelopment) {
   }
 }
 
-let openFilePaths = (win, [filePath]) => {
+let openFilePath = (win, filePath) => {
   if (!filePath) return;
 
   win.setRepresentedFilename(filePath);

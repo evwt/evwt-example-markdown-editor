@@ -86,6 +86,10 @@ export default {
     this.$evmenu.$on('input:save-file', () => {
       ipcRenderer.invoke('save-file', this.filePath, this.markdown);
     });
+
+    this.$evmenu.$on('input:new-window', () => {
+      ipcRenderer.invoke('new-window');
+    });
   }
 };
 </script>

@@ -7,6 +7,11 @@ export default [
     id: 'file',
     submenu: [
       {
+        id: 'new-window',
+        accelerator: 'CmdOrCtrl+N',
+        label: 'New'
+      },
+      {
         id: 'open-file',
         accelerator: 'CmdOrCtrl+O',
         label: 'Open...'

@@ -56,6 +56,14 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      builderOptions: {
+        fileAssociations: [
+          {
+            ext: 'md',
+            role: 'Editor'
+          }
+        ]
+      },
       nodeIntegration: true,
       chainWebpackRendererProcess: (config) => {
         useEvIcon(config);
