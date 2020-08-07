@@ -1,7 +1,7 @@
 <template>
   <ev-layout :layout="appLayout">
     <template v-slot:toolbar>
-      <Toolbar @undo="undo" @redo="redo" />
+      <Toolbar @undo="undo" @redo="redo" @cut="cut" @copy="copy" @paste="paste" />
     </template>
 
     <template v-slot:editor>
@@ -99,6 +99,18 @@ export default {
 
     redo() {
       this.$refs.editor.redo();
+    },
+
+    cut() {
+      this.$refs.editor.cut();
+    },
+
+    copy() {
+      this.$refs.editor.copy();
+    },
+
+    paste() {
+      this.$refs.editor.paste();
     }
   }
 };

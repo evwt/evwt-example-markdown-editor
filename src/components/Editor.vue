@@ -44,8 +44,11 @@ export default {
       set(val) {
         this.$emit('input', val);
       }
-    }
+    },
 
+    editor() {
+      return this.$refs.monaco.getEditor();
+    }
   },
 
   mounted() {
@@ -56,13 +59,26 @@ export default {
 
   methods: {
     undo() {
-      let editor = this.$refs.monaco.getEditor();
-      editor.trigger('', 'undo');
+      this.editor.trigger('source', 'undo');
     },
 
     redo() {
-      let editor = this.$refs.monaco.getEditor();
-      editor.trigger('', 'redo');
+      this.editor.trigger('source', 'redo');
+    },
+
+    cut() {
+      this.editor.focus();
+      document.execCommand('cut');
+    },
+
+    copy() {
+      this.editor.focus();
+      document.execCommand('copy');
+    },
+
+    paste() {
+      this.editor.focus();
+      document.execCommand('paste');
     },
 
     handleResize: throttle(function(entries) {

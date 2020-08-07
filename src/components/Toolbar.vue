@@ -28,18 +28,34 @@
       tooltip="Show Sidebar" />
 
     <ev-toolbar-item
-      menu-id="undo"
       icon="undo-alt"
       label="Undo"
       tooltip="Undo Typing"
       @click.native="$emit('undo')" />
 
     <ev-toolbar-item
-      menu-id="redo"
       icon="redo-alt"
       label="Redo"
       tooltip="Redo Typing"
       @click.native="$emit('redo')" />
+
+    <ev-toolbar-item
+      icon="cut"
+      label="cut"
+      tooltip="Cut Text"
+      @click.native="$emit('cut')" />
+
+    <ev-toolbar-item
+      icon="copy"
+      label="copy"
+      tooltip="Copy Text"
+      @click.native="$emit('copy')" />
+
+    <ev-toolbar-item
+      icon="paste"
+      label="paste"
+      tooltip="Paste Text"
+      @click.native="$emit('paste')" />
   </ev-toolbar>
 </template>
 
