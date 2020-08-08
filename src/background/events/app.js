@@ -30,7 +30,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow('blank');
+    createWindow();
   }
 });
 
@@ -46,7 +46,7 @@ app.on('ready', async () => {
   // There might already be windows from open-file, so only create a new
   // one if no windows
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow('blank');
+    createWindow();
   }
 });
 

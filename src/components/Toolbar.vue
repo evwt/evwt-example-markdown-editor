@@ -23,7 +23,7 @@
 
     <ev-toolbar-item
       menu-id="show-preview"
-      icon="window-maximize"
+      icon="window-sidebar"
       label="Sidebar"
       tooltip="Show Preview" />
 

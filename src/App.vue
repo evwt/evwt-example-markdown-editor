@@ -1,11 +1,18 @@
 <template>
-  <ev-layout :layout="appLayout">
+  <ev-layout :layout="appLayout" @drop.native.prevent.stop @dragover.native.prevent.stop>
     <template v-slot:toolbar>
-      <Toolbar @undo="undo" @redo="redo" @cut="cut" @copy="copy" @paste="paste" />
+      <Toolbar
+        @undo="undo"
+        @redo="redo"
+        @cut="cut"
+        @copy="copy"
+        @paste="paste" />
     </template>
 
     <template v-slot:editor>
-      <Editor ref="editor" v-model="markdown" />
+      <ev-drop-zone @drop="handleDrop">
+        <Editor ref="editor" v-model="markdown" />
+      </ev-drop-zone>
     </template>
 
     <template v-slot:preview>
@@ -16,7 +23,7 @@
 
 <script>
 import { ipcRenderer } from 'electron';
-import { EvLayout } from 'evwt';
+import { EvLayout, EvDropZone } from 'evwt';
 import Editor from '@/components/Editor';
 import Preview from '@/components/Preview';
 import Toolbar from '@/components/Toolbar';
@@ -27,7 +34,8 @@ export default {
     EvLayout,
     Editor,
     Preview,
-    Toolbar
+    Toolbar,
+    EvDropZone
   },
 
   data() {
@@ -38,6 +46,10 @@ export default {
   },
 
   computed: {
+    editorClass() {
+      return '';
+    },
+
     appLayout() {
       return {
         direction: 'row',
@@ -98,6 +110,12 @@ export default {
   },
 
   methods: {
+    handleDrop(files) {
+      if (files.length) {
+        ipcRenderer.invoke('file-dragged-in', files[0].path);
+      }
+    },
+
     undo() {
       this.$refs.editor.undo();
     },

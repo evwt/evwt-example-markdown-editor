@@ -2,7 +2,7 @@ import fs from 'fs';
 import {
   dialog, BrowserWindow, ipcMain
 } from 'electron';
-import { finishFileOpening } from '../fileOpening';
+import { finishFileOpening, readFile } from '../fileOpening';
 import { createWindow } from '../windowManagement';
 
 ipcMain.handle('save-file', async (e, filePath, fileBytes) => {
@@ -27,6 +27,11 @@ ipcMain.handle('save-new-file', async (e, fileBytes) => {
     finishFileOpening(win, filePath);
     return filePath;
   }
+});
+
+ipcMain.handle('file-dragged-in', (e, filePath) => {
+  let win = BrowserWindow.fromWebContents(e.sender);
+  readFile(win, filePath);
 });
 
 ipcMain.handle('new-window', async (e, id) => {

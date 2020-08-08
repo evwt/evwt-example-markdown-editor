@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "John Susek <john@johnsolo.net>",
   "description": "Example project for EVWT",
+  "license": "Apache-2.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
