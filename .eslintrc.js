@@ -4,9 +4,9 @@ module.exports = {
     node: true,
     mocha: true
   },
-  'globals': {
-    'BigInt': true,
-    'BigUint64Array': true
+  globals: {
+    BigInt: true,
+    BigUint64Array: true
   },
   extends: [
     'plugin:vue/recommended',
@@ -30,7 +30,6 @@ module.exports = {
     'func-names': 'off',
     'arrow-parens': 'off',
     camelcase: 'off',
-    'prefer-const': 'off',
     'no-console': 'off',
     'no-continue': 'off',
     'prefer-const': 'off',
