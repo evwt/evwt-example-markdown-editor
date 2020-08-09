@@ -1,7 +1,6 @@
 const isMac = process.platform === 'darwin';
 
-export default [
-  (isMac ? { role: 'appMenu' } : {}),
+const menu = [
   {
     label: 'File',
     id: 'file',
@@ -102,3 +101,9 @@ export default [
     ]
   }
 ];
+
+if (isMac) {
+  menu.unshift({ role: 'appMenu' });
+}
+
+export default menu;
