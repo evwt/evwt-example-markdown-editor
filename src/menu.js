@@ -58,6 +58,7 @@ export default [
         id: 'show-preview',
         label: 'Show Preview',
         type: 'checkbox',
+        accelerator: 'CmdOrCtrl+Alt+P',
         checked: true
       }
     ]

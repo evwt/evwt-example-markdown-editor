@@ -6,6 +6,8 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import { EvMenu, EvWindow } from 'evwt';
 import { readFile } from './fileOpening';
 
+const isTesting = process.env.npm_lifecycle_event === 'test';
+
 export function createWindow(restoreId = uuidv4()) {
   let options = {
     show: false,
@@ -25,6 +27,11 @@ export function createWindow(restoreId = uuidv4()) {
   EvWindow.startStoringOptions(restoreId, win);
 
   listenEvents(win);
+
+  // EVWT Test Suite events - not needed for normal apps
+  if (isTesting) {
+    listenTestEvents(win);
+  }
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
@@ -66,5 +73,16 @@ function listenEvents(win) {
 
   win.on('closed', () => {
     win = null;
+  });
+}
+
+// EVWT Test Suite - Not needed for normal apps
+function listenTestEvents(win) {
+  win.on('evmenu', item => {
+    process.env.evwtTestEvMenuWin1 = JSON.stringify(item);
+  });
+
+  win.on('evmenu:show-preview', item => {
+    process.env.evwtTestEvMenuWin2 = JSON.stringify(item);
   });
 }

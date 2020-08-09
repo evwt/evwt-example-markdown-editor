@@ -9,6 +9,16 @@ Vue.config.productionTip = false;
 
 Vue.use(EvMenu, menu);
 
-new Vue({
+// Setting window.$app here so it can be accessed during tests
+window.$app = new Vue({
   render: (h) => h(App)
 }).$mount('#app');
+
+// EVWT Test Suite - Not needed for normal apps
+window.$app.$evmenu.$on('input', item => {
+  window.evwtTestEvMenuEvent1 = JSON.stringify(item);
+});
+
+window.$app.$evmenu.$on('input:show-preview', item => {
+  window.evwtTestEvMenuEvent2 = JSON.stringify(item);
+});
