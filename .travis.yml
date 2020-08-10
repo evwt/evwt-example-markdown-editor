@@ -27,9 +27,9 @@ script:
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine-chrome \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && npm run electron:build"
+        /bin/bash -c "yarn --link-duplicates --pure-lockfile && npm run electron:build && yarn test"
     else
-      yarn release
+      yarn test
     fi
 
 before_cache:
