@@ -8728,10 +8728,9 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
-sendkeys-js@^0.0.4:
+"sendkeys-js@https://github.com/johnsusek/node-sendkeys-js":
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/sendkeys-js/-/sendkeys-js-0.0.4.tgz#2f1767c9328f1a590921482ce37e8260f2ad3222"
-  integrity sha512-TW1ZzkHPDJn/uB8pl/SNoQPW94VV3w+ytRD+PjRfwRDz1ORRflOBoVZ8LNrF94mLDya+opOgRl+VzShee205MQ==
+  resolved "https://github.com/johnsusek/node-sendkeys-js#777fb0be28205ebe521a600c3f62ba74461e7c3e"
 
 serialize-error@^7.0.0, serialize-error@^7.0.1:
   version "7.0.1"
