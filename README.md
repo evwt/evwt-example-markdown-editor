@@ -1,8 +1,10 @@
-# evwt-example-markdown-editor
+# evwt-example-markdown-editor  [![Build Status](https://travis-ci.org/evwt/evwt-example-markdown-editor.svg?branch=master)](https://travis-ci.org/evwt/evwt-example-markdown-editor)
 
-An example EVWT app to edit markdown files with a live preview.
+An example EVWT app to edit markdown files with a live preview. 
 
-This app also serves as the official testbed of EVWT.
+This app also serves as the official [testbed](https://github.com/evwt/evwt-example-markdown-editor/tree/master/test) of EVWT.
+
+---
 
 ![markdown-demo](https://user-images.githubusercontent.com/611996/89716173-77eff300-d970-11ea-8119-e736a6b5671a.png)
 
