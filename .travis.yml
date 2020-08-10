@@ -32,7 +32,7 @@ script:
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine-chrome \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && npm run electron:build && yarn test"
+        /bin/bash -c "apt update && apt install xdotool && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test"
     else
       yarn test
     fi
