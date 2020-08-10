@@ -9,7 +9,9 @@ matrix:
     #     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
     - os: linux
-      services: docker
+      services:
+        - docker
+        - xvfb
       language: generic
 
 cache:
@@ -17,6 +19,9 @@ cache:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
+
+before_install:
+  - docker pull electronuserland/builder:wine-chrome
 
 script:
   - |
