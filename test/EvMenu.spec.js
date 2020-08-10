@@ -5,7 +5,20 @@ let assert = require('assert');
 let sendkeys = require('sendkeys-js');
 
 let appName = 'evwt-example-markdown-editor';
+
+const isLinux = process.platform === 'linux';
+
+let key = (k) => `"${k}"`;
+let cmdOrCtrl = 'command';
+let optionOrAlt = 'option';
 let appPath = `../dist_electron/mac/${appName}.app/Contents/MacOS/${appName}`;
+
+if (isLinux) {
+  key = (k) => k.toLowerCase();
+  cmdOrCtrl = 'ctrl';
+  optionOrAlt = 'alt';
+  appPath = `../dist_electron/linux-unpacked/${appName}`;
+}
 
 describe('Application launch', () => {
   beforeEach(async function () {
@@ -45,7 +58,7 @@ describe('Application launch', () => {
     // Starts open - the keyboard shortcut should close it
     assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
 
-    sendkeys.send('"P"', ['command', 'option']);
+    sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
 
     style = await pane.getAttribute('style');
 
@@ -57,7 +70,7 @@ describe('Application launch', () => {
     // This verifies native menu events (triggered by keypresses)
     // get sent to the app event bus
 
-    sendkeys.send('"P"', ['command', 'option']);
+    sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
 
     let { evwtTestEvMenuApp1, evwtTestEvMenuApp2 } = await this.app.mainProcess.env();
 
@@ -72,7 +85,7 @@ describe('Application launch', () => {
     // This verifies native menu events (triggered by keypresses)
     // get sent to the window event bus
 
-    sendkeys.send('"P"', ['command', 'option']);
+    sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
 
     let { evwtTestEvMenuWin1, evwtTestEvMenuWin2 } = await this.app.mainProcess.env();
 
@@ -116,7 +129,7 @@ describe('Application launch', () => {
   });
 
   it('Native menu events trigger $evmenu input events', async function () {
-    sendkeys.send('"P"', ['command', 'option']);
+    sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
 
     let evwtTestEvMenuEvent1 = await this.app.client.execute(() => window.evwtTestEvMenuEvent1);
     let evwtTestEvMenuEvent2 = await this.app.client.execute(() => window.evwtTestEvMenuEvent2);
