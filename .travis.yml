@@ -3,7 +3,7 @@ matrix:
     # - os: osx
     #   osx_image: xcode10.2
     #   language: node_js
-    #   node_js: "10"
+    #   node_js: "12"
     #   env:
     #     - ELECTRON_CACHE=$HOME/.cache/electron
     #     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
@@ -28,7 +28,7 @@ script:
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine-chrome \
-        /bin/bash -c "apt update && apt install -Y xdotool && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test"
+        /bin/bash -c "apt update && apt install -y xdotool && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test"
     else
       yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test
     fi
