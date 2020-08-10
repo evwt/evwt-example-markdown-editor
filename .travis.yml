@@ -1,11 +1,3 @@
-services:
-  - xvfb
-
-notifications:
-  email:
-    on_success: never
-    on_failure: never
-
 matrix:
   include:
     # - os: osx
@@ -34,11 +26,12 @@ script:
         -v ${PWD}:/project \
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
+        electronuserland/builder:wine-chrome \
         /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn release --linux --win"
     else
       yarn release
     fi
+
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 

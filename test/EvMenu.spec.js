@@ -26,7 +26,15 @@ describe('Application launch', () => {
 
     this.app = new Application({
       path: path.join(__dirname, appPath),
-      args: [path.join(__dirname, '..')]
+      args: [path.join(__dirname, '..')],
+      chromeDriverArgs: [
+        '--disable-setuid-sandbox',
+        '--no-sandbox',
+        '--headless',
+        '--disable-dev-shm-usage',
+        '----disable-dev-shm-using',
+        '--remote-debugging-port=9222'
+      ]
     });
 
     await this.app.start();
@@ -58,7 +66,11 @@ describe('Application launch', () => {
     // Starts open - the keyboard shortcut should close it
     assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
 
-    sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
+    try {
+      sendkeys.send(key('P'), [cmdOrCtrl, optionOrAlt]);
+    } catch (error) {
+      console.log(error.toString());
+    }
 
     style = await pane.getAttribute('style');
 
