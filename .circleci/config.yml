@@ -6,6 +6,12 @@ jobs:
       - image: circleci/node:12-browsers
     steps:
       - checkout
+      -  run:
+          name: Setup for headless testing
+          command: |
+            if [ "`uname`" != "Darwin" ]; then
+              sh -e /etc/init.d/xvfb start
+            fi
       - run:
           name: Update NPM
           command: "sudo npm install -g npm"
