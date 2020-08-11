@@ -11,5 +11,6 @@ steps:
 - name: Test
   commands:
   - yarn
+  - yarn electron:build
   - yarn test
 
