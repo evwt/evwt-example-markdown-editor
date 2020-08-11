@@ -36,6 +36,9 @@ describe('EvMenu', () => {
     });
 
     await this.app.start();
+
+    // Add delay to help run tests on Linux
+    await new Promise(r => setTimeout(r, 200));
   });
 
   afterEach(function () {
