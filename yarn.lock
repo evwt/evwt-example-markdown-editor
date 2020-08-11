@@ -4288,10 +4288,10 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-evwt@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.5.tgz#f0a53b59203304eec83bde8f407d67c34da482c2"
-  integrity sha512-zgrr9MG9yFVh2wWGCgX1jDVvyvQptO3JUo9k1XnOWMEdJmLpzB/d60EEWCoMJdDHqBA5Uz/0gglyJ+FFYjho6A==
+evwt@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.7.tgz#8c555100d33507d61ad279330fda16b87614d4ca"
+  integrity sha512-EYVb0e2fuuwaMYkEjgVIsCWW5BgDfeAgT5IthgpIQg11ryu4AsdrUH6kjuvnX6W8tj4uEKbdqR6s5iw5UuvF2A==
   dependencies:
     core-js "3.6.5"
     electron-store "^6.0.0"
