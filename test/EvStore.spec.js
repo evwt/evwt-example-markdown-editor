@@ -1,8 +1,10 @@
 let path = require('path');
 let Application = require('spectron').Application;
 let assert = require('assert');
+let { execSync } = require('child_process');
 
 const appName = 'evwt-example-markdown-editor';
+const isMac = process.platform === 'darwin';
 const isLinux = process.platform === 'linux';
 
 let appPath = `../dist_electron/mac/${appName}.app/Contents/MacOS/${appName}`;
@@ -13,6 +15,10 @@ if (isLinux) {
 
 describe('EvStore', () => {
   beforeEach(async function () {
+    if (isMac) {
+      execSync(`killall ${appName} 2>/dev/null || true`);
+    }
+
     this.timeout(10000);
 
     this.app = new Application({
