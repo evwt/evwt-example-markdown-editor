@@ -3,15 +3,9 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:12-browsers
+      - image: bdadamas24/node-xvfb
     steps:
       - checkout
-      -  run:
-          name: Setup for headless testing
-          command: |
-            if [ "`uname`" != "Darwin" ]; then
-              sh -e /etc/init.d/xvfb start
-            fi
       - run:
           name: Update NPM
           command: "sudo npm install -g npm"
@@ -26,4 +20,4 @@ jobs:
             - ./node_modules
       - run:
           name: Run tests
-          command: npm run test
+          command: xvfb-run --server-args="-screen 0 1024x768x24" npm test
