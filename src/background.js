@@ -1,5 +1,5 @@
 import { app, protocol } from 'electron';
-import { EvMenu } from 'evwt';
+import { EvMenu, EvStore } from 'evwt';
 import './background/events/app';
 import './background/events/ipc';
 
@@ -8,6 +8,7 @@ import './background/events/test';
 
 const isNotProduction = process.env.NODE_ENV !== 'production';
 
+EvStore.activate();
 EvMenu.activate();
 
 protocol.registerSchemesAsPrivileged([
