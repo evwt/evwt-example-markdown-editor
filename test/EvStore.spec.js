@@ -44,7 +44,9 @@ describe('EvStore', () => {
     let testKey = Math.random().toString().substr(2);
     let testVal = Math.random().toString().substr(2);
 
-    await this.app.webContents.executeJavaScript(`window.$app.$set(window.$app.$evstore.store, "${testKey}", "${testVal}")`);
+    await this.app.client.execute(async (key, val) => {
+      window.$app.$set(window.$app.$evstore.store, `${key}`, `${val}`);
+    }, testKey, testVal);
 
     await this.app.client.execute(async () => {
       window.$app.$evmenu.$emit('click', 'new-window');
@@ -55,6 +57,7 @@ describe('EvStore', () => {
 
     // Switch to second window
     await this.app.client.windowByIndex(1);
+    await new Promise(r => setTimeout(r, 200));
 
     let secondWindowStore = await this.app.client.execute(() => window.$app.$evstore.store);
 
