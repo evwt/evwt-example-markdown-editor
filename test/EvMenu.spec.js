@@ -2,8 +2,10 @@ let path = require('path');
 let Application = require('spectron').Application;
 let assert = require('assert');
 let sendkeys = require('sendkeys-js');
+let { execSync } = require('child_process');
 
 const appName = 'evwt-example-markdown-editor';
+const isMac = process.platform === 'darwin';
 const isLinux = process.platform === 'linux';
 
 let key = (k) => `"${k}"`;
@@ -20,6 +22,10 @@ if (isLinux) {
 
 describe('EvMenu', () => {
   beforeEach(async function () {
+    if (isMac) {
+      execSync(`killall ${appName} 2>/dev/null || true`);
+    }
+
     this.timeout(10000);
 
     this.app = new Application({
@@ -52,6 +58,11 @@ describe('EvMenu', () => {
     assert.strictEqual(result.accelerator, 'CmdOrCtrl+Alt+P');
     assert.strictEqual(result.acceleratorWorksWhenHidden, true);
   }
+
+  it('Launches', async function () {
+    let count = await this.app.client.getWindowCount();
+    assert.strictEqual(count, 1);
+  });
 
   it('Native menu input triggers Vue events', async function () {
     // This verifies native menu events (triggered by keypresses)

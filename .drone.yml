@@ -1,0 +1,16 @@
+---
+kind: pipeline
+type: exec
+name: default
+
+platform:
+  os: darwin
+  arch: amd64
+
+steps:
+- name: Test
+  commands:
+  - yarn
+  - yarn electron:build
+  - yarn test
+
