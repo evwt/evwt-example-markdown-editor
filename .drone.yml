@@ -11,4 +11,4 @@ steps:
 - name: greeting
   commands:
   - yarn
-  - yarn electron-serve
+  - yarn electron:serve
