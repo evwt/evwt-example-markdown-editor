@@ -12,3 +12,4 @@ steps:
   commands:
   - yarn
   - yarn electron:serve
+
