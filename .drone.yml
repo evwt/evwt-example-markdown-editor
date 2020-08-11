@@ -8,8 +8,8 @@ platform:
   arch: amd64
 
 steps:
-- name: greeting
+- name: Test
   commands:
   - yarn
-  - yarn electron:serve
+  - yarn test
 
