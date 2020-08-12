@@ -1,4 +1,4 @@
-let { useEvIcon } = require('evwt/plugins/EvIcon');
+let EvIcon = require('evwt/background/EvIcon');
 let MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
@@ -66,7 +66,7 @@ module.exports = {
       },
       nodeIntegration: true,
       chainWebpackRendererProcess: (config) => {
-        useEvIcon(config);
+        EvIcon.use(config);
       }
     }
   }

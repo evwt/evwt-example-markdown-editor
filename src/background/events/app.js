@@ -2,7 +2,7 @@ import {
   app, BrowserWindow
 } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { EvWindow } from 'evwt';
+import { EvWindow } from 'evwt/background';
 import { createWindow } from '../windowManagement';
 import { readFile } from '../fileOpening';
 

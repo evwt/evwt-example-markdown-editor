@@ -3,7 +3,7 @@ import {
   dialog, BrowserWindow
 } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
-import { EvMenu, EvWindow } from 'evwt';
+import { EvMenu, EvWindow } from 'evwt/background';
 import { readFile } from './fileOpening';
 
 const isTesting = process.env.npm_lifecycle_event === 'test';

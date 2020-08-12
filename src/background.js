@@ -1,6 +1,5 @@
 import { app, protocol } from 'electron';
-import { EvMenu } from 'evwt';
-import { EvStore } from 'evwt/background';
+import { EvStore, EvMenu } from 'evwt/background';
 import './background/events/app';
 import './background/events/ipc';
 
