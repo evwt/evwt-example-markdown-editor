@@ -5,4 +5,6 @@ jobs:
       - image: 'electronuserland/builder:wine-chrome'
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: apt update && apt install -y xdotool && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test
