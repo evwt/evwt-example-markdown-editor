@@ -4,15 +4,13 @@
       menu-id="open-file"
       icon="folder-open"
       label="Open"
-      tooltip="Open File"
-      @click.native="$evmenu.$emit('click', 'open-file')" />
+      tooltip="Open File" />
 
     <ev-toolbar-item
       menu-id="save-file"
       icon="save"
       label="Save"
-      tooltip="Save File"
-      @click.native="$evmenu.$emit('click', 'save-file')" />
+      tooltip="Save File" />
 
     <ev-toolbar-item
       menu-id="show-preview"

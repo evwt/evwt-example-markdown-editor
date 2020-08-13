@@ -205,3 +205,45 @@ describe('EvMenu', () => {
     assertPreviewMenuItem(result2);
   });
 });
+
+describe('EvToolbar/EvToolbarItem', () => {
+  beforeEach(async function () {
+    this.timeout(10000);
+    app = await bootstrapTest();
+  });
+
+  afterEach(async () => {
+    await teardownTest(app);
+  });
+
+  after(async () => {
+    teardownAll();
+  });
+
+  it('Launches', async () => {
+    let count = await app.client.getWindowCount();
+    assert.strictEqual(count, 1);
+  });
+
+  it('Icons drawn', async () => {
+    let svg = await app.client.$('.ev-icon-folder-open svg');
+    assert.strictEqual(await svg.isExisting(), true);
+  });
+
+  it('Has right classes and triggers menu item', async () => {
+    let pane = await app.client.$('.ev-pane-main');
+    let style = await pane.getAttribute('style');
+
+    // Starts open - binding should close it
+    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
+
+    let toolbarItem = await app.client.$('.ev-toolbar-item-show-preview');
+
+    await toolbarItem.click();
+
+    style = await pane.getAttribute('style');
+
+    // Right-most column is now closed
+    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 0px;');
+  });
+});
