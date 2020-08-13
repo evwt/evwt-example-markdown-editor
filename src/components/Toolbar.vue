@@ -1,12 +1,5 @@
 <template>
-  <ev-toolbar
-    :icon-size="16"
-    icon-pos="above"
-    :icon-show="true"
-    :labels="false"
-    :min-width="40"
-    :font-size="11"
-    :padding="3">
+  <ev-toolbar>
     <ev-toolbar-item
       menu-id="open-file"
       icon="folder-open"
@@ -41,19 +34,19 @@
 
     <ev-toolbar-item
       icon="cut"
-      label="cut"
+      label="Cut"
       tooltip="Cut Text"
       @click.native="$emit('cut')" />
 
     <ev-toolbar-item
       icon="copy"
-      label="copy"
+      label="Copy"
       tooltip="Copy Text"
       @click.native="$emit('copy')" />
 
     <ev-toolbar-item
       icon="paste"
-      label="paste"
+      label="Paste"
       tooltip="Paste Text"
       @click.native="$emit('paste')" />
   </ev-toolbar>
