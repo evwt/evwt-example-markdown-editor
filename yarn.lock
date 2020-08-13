@@ -4288,14 +4288,15 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-evwt@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.8.tgz#2db4eb09ee90ab94118ac48c259664b823343f76"
-  integrity sha512-dBlAdH6jODb/bdwvP9TTQX8RYMO+TC7vxhoIUHJVMLsguMxES1ohMrjR8JzRV8evqWp2ZiYRPKMNAXCFM+5iUg==
+evwt@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.9.tgz#9ff9353de1f397fc9e919859f46e8c0db2b2c49a"
+  integrity sha512-A+JAVU04wosq6HZQXs/N/WYMxz2Bhn4R6fYF6a4e85zbKTLoGwal7vmkWusaM1yGCSQPDFcWhdMgfv1aHG2rhg==
   dependencies:
     core-js "3.6.5"
     electron-store "^6.0.0"
     lodash "4.17.19"
+    loglevel "^1.6.8"
     vue "2.6.11"
 
 execa@^0.8.0:
