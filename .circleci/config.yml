@@ -1,0 +1,8 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: 'electronuserland/builder:wine-chrome'
+    steps:
+      - checkout
+      - run: apt update && apt install -y xdotool && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test
