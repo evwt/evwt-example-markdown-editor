@@ -2,6 +2,7 @@ import fs from 'fs';
 import {
   dialog, BrowserWindow, ipcMain
 } from 'electron';
+import { EvWindow } from 'evwt/background';
 import { finishFileOpening, readFile } from '../fileOpening';
 import { createWindow } from '../windowManagement';
 
@@ -24,6 +25,10 @@ ipcMain.handle('save-new-file', async (e, fileBytes) => {
 
   if (!canceled) {
     fs.writeFileSync(filePath, fileBytes);
+
+    // since we use the file path as the restoreId, we start storing with the new path
+    EvWindow.startStoringOptions(filePath, win);
+
     finishFileOpening(win, filePath);
     return filePath;
   }
