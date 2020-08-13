@@ -7,13 +7,13 @@ const appName = 'evwt-example-markdown-editor';
 const isMac = process.platform === 'darwin';
 const isLinux = process.platform === 'linux';
 
+let appPath = `../dist_electron/mac/${appName}.app/Contents/MacOS/${appName}`;
+
+if (isLinux) {
+  appPath = `../dist_electron/linux-unpacked/${appName}`;
+}
+
 async function bootstrapTest() {
-  if (isLinux) {
-    appPath = `../dist_electron/linux-unpacked/${appName}`;
-  }
-
-  let appPath = `../dist_electron/mac/${appName}.app/Contents/MacOS/${appName}`;
-
   let app = new Application({
     path: path.join(__dirname, appPath),
     args: [path.join(__dirname, '..')],
