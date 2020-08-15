@@ -33,6 +33,7 @@ const menu = [
       { role: 'cut' },
       { role: 'copy' },
       { role: 'paste' },
+      { role: 'selectAll' },
       ...(isMac ? [
         { type: 'separator' },
         {

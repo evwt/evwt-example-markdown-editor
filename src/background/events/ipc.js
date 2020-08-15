@@ -3,8 +3,8 @@ import {
   dialog, BrowserWindow, ipcMain
 } from 'electron';
 import { EvWindow } from 'evwt/background';
-import { finishFileOpening, readFile } from '../fileOpening';
-import { createWindow } from '../windowManagement';
+import { finishFileOpening, readFile } from '../file';
+import { createWindow } from '../window';
 
 ipcMain.handle('save-file', async (e, filePath, fileBytes) => {
   fs.writeFileSync(filePath, fileBytes);

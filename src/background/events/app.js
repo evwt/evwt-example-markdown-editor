@@ -1,10 +1,8 @@
-import {
-  app, BrowserWindow
-} from 'electron';
+import { app, BrowserWindow } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { EvWindow } from 'evwt/background';
-import { createWindow } from '../windowManagement';
-import { readFile } from '../fileOpening';
+import { createWindow } from '../window';
+import { readFile } from '../file';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -35,7 +33,7 @@ app.on('activate', () => {
 });
 
 app.on('ready', async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
+  if (isDevelopment && process.env.npm_lifecycle_event !== 'test') {
     try {
       await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
