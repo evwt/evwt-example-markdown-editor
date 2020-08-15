@@ -3482,6 +3482,11 @@ decompress-response@^6.0.0:
   dependencies:
     mimic-response "^3.1.0"
 
+deep-diff@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-1.0.2.tgz#afd3d1f749115be965e89c63edc7abb1506b9c26"
+  integrity sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==
+
 deep-equal@^1.0.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
@@ -4323,15 +4328,17 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-evwt@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.10.tgz#f62bffa53a0babb6b6a264193c99dd3e30041af2"
-  integrity sha512-5lcwrO5OII+PTL72jd4QKxg1S7gZKOZWjHPsHl0A75VEgWWujp+ScxwhC4NpJ+hozYqiok52YxHBGu9oQ1NcHg==
+evwt@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/evwt/-/evwt-0.0.11.tgz#e2e29b370616b881cd354fb7f7b59291ad19552c"
+  integrity sha512-vYO1t5k/90TmPaq+oPWiP9dilTnhfaD7ARDXOcPg2VgDuihpND4oyg5qf2Tf0pwCI818lCYgHFk7F53Qx0WpwQ==
   dependencies:
     core-js "3.6.5"
+    deep-diff "^1.0.2"
     electron-store "^6.0.0"
     lodash "4.17.19"
     loglevel "^1.6.8"
+    observable-slim "^0.1.5"
     vue "2.6.11"
 
 execa@^0.8.0:
@@ -7263,6 +7270,11 @@ object.values@^1.1.0, object.values@^1.1.1:
     es-abstract "^1.17.0-next.1"
     function-bind "^1.1.1"
     has "^1.0.3"
+
+observable-slim@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/observable-slim/-/observable-slim-0.1.5.tgz#ddb30df2db1ee3e5bc409d29268a5766faab6b24"
+  integrity sha512-xhDK4EjwM6ehZ6KhTtDc0z5kqBhqoBQPP9pq2n1c+RXA4IcyLIm68ipDwS3nZVXhrCssoKu4LcHDUT1tl0kP9A==
 
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
