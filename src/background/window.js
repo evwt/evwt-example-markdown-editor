@@ -4,9 +4,7 @@ import {
 } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import { EvMenu, EvWindow } from 'evwt/background';
-import { readFile } from './fileOpening';
-
-const isTesting = process.env.npm_lifecycle_event === 'test';
+import { readFile } from './file';
 
 export function createWindow(restoreId = uuidv4()) {
   let options = {
@@ -29,13 +27,13 @@ export function createWindow(restoreId = uuidv4()) {
   listenEvents(win);
 
   // EVWT Test Suite events - not needed for normal apps
-  if (isTesting) {
+  if (process.env.npm_lifecycle_event === 'test') {
     listenTestEvents(win);
   }
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    // if (!process.env.IS_TEST) win.webContents.openDevTools();
+    if (process.env.npm_lifecycle_event !== 'test') win.webContents.openDevTools();
   } else {
     createProtocol('app');
     win.loadURL('app://./index.html');
@@ -84,5 +82,13 @@ function listenTestEvents(win) {
 
   win.on('evmenu:show-preview', item => {
     process.env.evwtTestEvMenuWin2 = JSON.stringify(item);
+  });
+
+  win.on('evcontextmenu', item => {
+    process.env.evwtTestEvContextMenuWin1 = JSON.stringify(item);
+  });
+
+  win.on('evcontextmenu:my-context-menu:item-1', item => {
+    process.env.evwtTestEvContextMenuWin2 = JSON.stringify(item);
   });
 }
