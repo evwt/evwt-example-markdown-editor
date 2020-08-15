@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { EvMenu, EvStore } from 'evwt';
+import { EvMenu, EvStore, EvContextMenu } from 'evwt';
 import App from './App.vue';
 import '@/style/style.css';
 import '@/icons';
@@ -9,6 +9,7 @@ Vue.config.productionTip = false;
 
 Vue.use(EvMenu, menu);
 Vue.use(EvStore);
+Vue.use(EvContextMenu);
 
 // Setting window.$app here so it can be accessed during tests
 window.$app = new Vue({

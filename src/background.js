@@ -1,5 +1,5 @@
 import { app, protocol } from 'electron';
-import { EvStore, EvMenu } from 'evwt/background';
+import { EvStore, EvMenu, EvContextMenu } from 'evwt/background';
 import './background/events/app';
 import './background/events/ipc';
 
@@ -10,6 +10,7 @@ const isNotProduction = process.env.NODE_ENV !== 'production';
 
 EvStore.activate();
 EvMenu.activate();
+EvContextMenu.activate();
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
