@@ -5,4 +5,4 @@ jobs:
       - image: 'electronuserland/builder:wine-chrome'
     steps:
       - checkout
-      - run: apt update && apt install -y xdotool libxtst-dev && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test
+      - run: apt update && apt install -y xdotool libxtst-dev libpng-dev && yarn --link-duplicates --pure-lockfile && yarn electron:build && yarn test
