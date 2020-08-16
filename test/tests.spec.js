@@ -98,7 +98,6 @@ describe('EvMenu', () => {
   function assertPreviewMenuItem(result) {
     assert.strictEqual(result.id, 'show-preview');
     assert.strictEqual(result.accelerator, 'CmdOrCtrl+Alt+P');
-    assert.strictEqual(result.acceleratorWorksWhenHidden, true);
   }
 
   it('EVMenu - Native menu input triggers Vue events', async () => {
