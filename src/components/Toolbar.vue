@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { EvToolbar, EvToolbarItem } from 'evwt';
+import { EvToolbar, EvToolbarItem } from 'evwt/components';
 
 export default {
   components: {

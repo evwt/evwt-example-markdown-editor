@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { EvMenu, EvStore, EvContextMenu } from 'evwt';
+import { EvMenu, EvStore, EvContextMenu } from 'evwt/plugins';
 import App from './App.vue';
 import '@/style/style.css';
 import '@/icons';

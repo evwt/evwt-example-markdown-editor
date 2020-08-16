@@ -23,7 +23,7 @@
 
 <script>
 import { ipcRenderer } from 'electron';
-import { EvLayout, EvDropZone } from 'evwt';
+import { EvLayout, EvDropZone } from 'evwt/components';
 import Editor from '@/components/Editor';
 import Preview from '@/components/Preview';
 import Toolbar from '@/components/Toolbar';
