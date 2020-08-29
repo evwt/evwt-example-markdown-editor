@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  dialog, BrowserWindow
-} from 'electron';
+import { dialog } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import { EvMenu, EvWindow } from 'evwt/background';
 import { readFile } from './file';
@@ -11,18 +9,17 @@ export function createWindow(restoreId = uuidv4()) {
     show: false,
     width: 800,
     height: 600,
-    minWidth: 640,
-    minHeight: 480,
+    minWidth: 512,
+    minHeight: 384,
     webPreferences: {
       nodeIntegration: true
     }
   };
 
-  let storedOptions = EvWindow.getStoredOptions(restoreId, options);
-  let win = new BrowserWindow({ ...options, ...storedOptions });
+  let evWindow = new EvWindow(restoreId, options);
+  let win = evWindow.browserWindow;
 
   EvMenu.attach(win);
-  EvWindow.startStoringOptions(restoreId, win);
 
   listenEvents(win);
 
