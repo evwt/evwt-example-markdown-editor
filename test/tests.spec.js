@@ -39,7 +39,7 @@ describe('EvWindow', () => {
 
     let { evwtTestEvWindow1 } = await app.mainProcess.env();
 
-    assert.strictEqual(evwtTestEvWindow1, `evwindow.bounds.Ymxhbms= {"x":${randomX},"y":${randomY},"width":${randomW},"height":${randomH}}`);
+    assert.strictEqual(evwtTestEvWindow1, `blank.bounds {"x":${randomX},"y":${randomY},"width":${randomW},"height":${randomH}}`);
   });
 });
 
