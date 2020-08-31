@@ -43,6 +43,44 @@ describe('EvWindow', () => {
   });
 });
 
+describe('EVLayout ', () => {
+  beforeEach(async function () {
+    this.timeout(10000);
+    app = await bootstrapTest();
+  });
+
+  afterEach(async () => {
+    await teardownTest(app);
+  });
+
+  after(async () => {
+    teardownAll();
+  });
+
+  it('show/hide panes', async () => {
+    let pane = await app.client.$('.ev-pane-main');
+    let style = await pane.getAttribute('style');
+
+    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
+
+    await app.client.execute(() => {
+      window.$app.$children[0].$refs.evLayout.hidePane('preview');
+    });
+
+    style = await pane.getAttribute('style');
+
+    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 0px;');
+
+    await app.client.execute(() => {
+      window.$app.$children[0].$refs.evLayout.showPane('preview');
+    });
+
+    style = await pane.getAttribute('style');
+
+    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
+  });
+});
+
 describe('EVStore', () => {
   beforeEach(async function () {
     this.timeout(10000);
@@ -156,24 +194,6 @@ describe('EvMenu', () => {
     assertPreviewMenuItem(result);
   });
 
-  it('Native menu data binding - modify', async () => {
-    let pane = await app.client.$('.ev-pane-main');
-    let style = await pane.getAttribute('style');
-
-    // Starts open - binding should close it
-    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 1fr;');
-
-    await app.client.execute(() => {
-      let sp = window.$app.$evmenu.get('show-preview');
-      sp.checked = !sp.checked;
-    });
-
-    style = await pane.getAttribute('style');
-
-    // Right-most column is now closed
-    assert.strictEqual(style, 'grid-template-columns: 1fr 0px 0px;');
-  });
-
   it('Native menu events get triggered by $evmenu.$emit', async () => {
     await app.client.execute(async () => {
       window.$app.$evmenu.$emit('click', 'new-window');
@@ -283,9 +303,9 @@ describe('EvToolbar/EvToolbarItem', () => {
 
 //     let validResult = '{"item":{"id":"item-1","label":"Toggle","type":"checkbox","checked":false,"sublabel":"","toolTip":"","enabled":true,"visible":true,"acceleratorWorksWhenHidden":true,"registerAccelerator":true,"commandId":93},"id":"my-context-menu"}';
 
-//     assert.strictEqual(evwtTestEvContextMenuApp1, validResult);
-//     assert.strictEqual(evwtTestEvContextMenuWin1, validResult);
-//     assert.strictEqual(evwtTestEvContextMenuApp2, validResult);
-//     assert.strictEqual(evwtTestEvContextMenuWin2, validResult);
-//   });
+//   assert.strictEqual(evwtTestEvContextMenuApp1, validResult);
+//   assert.strictEqual(evwtTestEvContextMenuWin1, validResult);
+//   assert.strictEqual(evwtTestEvContextMenuApp2, validResult);
+//   assert.strictEqual(evwtTestEvContextMenuWin2, validResult);
+// });
 // });
