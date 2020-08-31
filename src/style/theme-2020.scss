@@ -15,7 +15,7 @@ textarea {
   color: var(--color-gray);
 }
 
-.ev-pane-toolbar {
+.ev-pane-toolbar .ev-layout-pane {
   background: #eee;
   border-bottom: 1px solid #ddd;
 }
@@ -24,12 +24,8 @@ textarea {
   overflow: hidden;
 }
 
-.ev-pane-preview {
-  border-left: 1px solid #ddd;
-}
-
 .ev-pane-preview .ev-layout-pane {
-  padding: 10px;
+  border-left: 1px solid #ddd;
 }
 
 .ev-toolbar .ev-toolbar-item {

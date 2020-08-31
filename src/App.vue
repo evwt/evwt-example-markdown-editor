@@ -1,5 +1,12 @@
 <template>
-  <ev-layout :layout="appLayout" @drop.native.prevent.stop @dragover.native.prevent.stop>
+  <ev-layout
+    v-show="loaded"
+    ref="evLayout"
+    :layout.sync="appLayout"
+    @pane-hidden="handlePaneHidden"
+    @pane-shown="handlePaneShown"
+    @drop.native.prevent.stop
+    @dragover.native.prevent.stop>
     <template v-slot:toolbar>
       <Toolbar
         @undo="undo"
@@ -40,18 +47,11 @@ export default {
 
   data() {
     return {
+      loaded: false,
       markdown: '',
-      filePath: ''
-    };
-  },
-
-  computed: {
-    editorClass() {
-      return '';
-    },
-
-    appLayout() {
-      return {
+      filePath: '',
+      appLayout: {
+        name: 'app',
         direction: 'row',
         sizes: ['auto', '1fr'],
         panes: [
@@ -62,7 +62,7 @@ export default {
           {
             name: 'main',
             direction: 'column',
-            sizes: ['1fr', this.previewSize],
+            sizes: ['1fr', '1fr'],
             panes: [
               {
                 name: 'editor'
@@ -73,21 +73,21 @@ export default {
             ]
           }
         ]
-      };
-    },
-
-    previewSize() {
-      let size = '1fr';
-
-      if (!this.$evmenu.get('show-preview').checked) {
-        size = 0;
       }
+    };
+  },
 
-      return size;
+  computed: {
+    editorClass() {
+      return '';
     }
   },
 
   created() {
+    window.onload = () => {
+      this.loaded = true;
+    };
+
     ipcRenderer.on('eeme:open-file', (event, { filePath, fileContents }) => {
       this.markdown = fileContents;
       this.filePath = filePath;
@@ -109,7 +109,31 @@ export default {
     });
   },
 
+  mounted() {
+    this.$evmenu.$on('input:show-preview', ({ checked }) => {
+      if (checked) {
+        this.$refs.evLayout.showPane('preview');
+      } else {
+        this.$refs.evLayout.hidePane('preview');
+      }
+    });
+
+    this.$evmenu.get('show-preview').checked = !this.$refs.evLayout.getPane('preview').hidden;
+  },
+
   methods: {
+    handlePaneHidden(pane) {
+      if (pane === 'preview') {
+        this.$evmenu.get('show-preview').checked = false;
+      }
+    },
+
+    handlePaneShown(pane) {
+      if (pane === 'preview') {
+        this.$evmenu.get('show-preview').checked = true;
+      }
+    },
+
     handleDrop(files) {
       if (files.length) {
         ipcRenderer.invoke('file-dragged-in', files[0].path);
