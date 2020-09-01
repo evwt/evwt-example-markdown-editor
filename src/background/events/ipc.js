@@ -1,6 +1,6 @@
 import fs from 'fs';
 import {
-  dialog, BrowserWindow, ipcMain
+  dialog, BrowserWindow, ipcMain, webContents
 } from 'electron';
 import { EvWindow } from 'evwt/background';
 import { finishFileOpening, readFile } from '../file';
@@ -41,4 +41,11 @@ ipcMain.handle('file-dragged-in', (e, filePath) => {
 
 ipcMain.handle('new-window', async (e, id) => {
   createWindow(id);
+});
+
+ipcMain.handle('eeme:devtools-toggle', async (e, id) => {
+  let win = BrowserWindow.fromWebContents(e.sender);
+  let devtools = webContents.getAllWebContents().find(w => w.devToolsWebContents);
+  win.webContents.toggleDevTools();
+  return !devtools;
 });

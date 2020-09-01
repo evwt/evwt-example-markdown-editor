@@ -9,11 +9,13 @@
     @dragover.native.prevent.stop>
     <template v-slot:toolbar>
       <Toolbar
+        :active="activeToolbarItems"
         @undo="undo"
         @redo="redo"
         @cut="cut"
         @copy="copy"
-        @paste="paste" />
+        @paste="paste"
+        @toggle-devtools="toggleDevtools" />
     </template>
 
     <template v-slot:editor>
@@ -34,6 +36,7 @@ import { EvLayout, EvDropZone } from 'evwt/components';
 import Editor from '@/components/Editor';
 import Preview from '@/components/Preview';
 import Toolbar from '@/components/Toolbar';
+
 import '@/style/theme-2020.scss';
 
 export default {
@@ -50,6 +53,7 @@ export default {
       loaded: false,
       markdown: '',
       filePath: '',
+      activeToolbarItems: {},
       appLayout: {
         name: 'app',
         direction: 'row',
@@ -122,6 +126,11 @@ export default {
   },
 
   methods: {
+    async toggleDevtools() {
+      let opened = await ipcRenderer.invoke('eeme:devtools-toggle');
+      this.$set(this.activeToolbarItems, 'toggle-devtools', opened);
+    },
+
     handlePaneHidden(pane) {
       if (pane === 'preview') {
         this.$evmenu.get('show-preview').checked = false;

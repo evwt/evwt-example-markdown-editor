@@ -1,5 +1,11 @@
 <template>
   <ev-toolbar>
+    <!-- <ev-toolbar-item
+      menu-id="new-window"
+      icon="file-alt"
+      label="New"
+      tooltip="New Window" /> -->
+
     <ev-toolbar-item
       menu-id="open-file"
       icon="folder-open"
@@ -15,38 +21,45 @@
     <ev-toolbar-item
       menu-id="show-preview"
       icon="window-sidebar"
-      label="Sidebar"
+      label="Preview"
       tooltip="Show Preview" />
 
     <ev-toolbar-item
       icon="undo-alt"
       label="Undo"
       tooltip="Undo Typing"
-      @click.native="$emit('undo')" />
+      @click="$emit('undo')" />
 
     <ev-toolbar-item
       icon="redo-alt"
       label="Redo"
       tooltip="Redo Typing"
-      @click.native="$emit('redo')" />
+      @click="$emit('redo')" />
 
     <ev-toolbar-item
       icon="cut"
       label="Cut"
       tooltip="Cut Text"
-      @click.native="$emit('cut')" />
+      @click="$emit('cut')" />
 
     <ev-toolbar-item
       icon="copy"
       label="Copy"
       tooltip="Copy Text"
-      @click.native="$emit('copy')" />
+      @click="$emit('copy')" />
 
     <ev-toolbar-item
       icon="paste"
       label="Paste"
       tooltip="Paste Text"
-      @click.native="$emit('paste')" />
+      @click="$emit('paste')" />
+
+    <!-- <ev-toolbar-item
+      icon="tools"
+      label="DevTools"
+      tooltip="Toggle Developer Tools"
+      :active="active['toggle-devtools']"
+      @click="$emit('toggle-devtools')" /> -->
   </ev-toolbar>
 </template>
 
@@ -57,6 +70,10 @@ export default {
   components: {
     EvToolbar,
     EvToolbarItem
+  },
+
+  props: {
+    active: Object
   }
 };
 </script>
