@@ -9,7 +9,8 @@ export function createWindow(restoreId = uuidv4()) {
     show: false,
     width: 800,
     height: 600,
-    // minWidth: 512,
+    minWidth: 512,
+    backgroundColor: '#ffffff',
     minHeight: 384,
     webPreferences: {
       nodeIntegration: true
