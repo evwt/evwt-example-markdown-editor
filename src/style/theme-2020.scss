@@ -1,10 +1,58 @@
 :root {
-  --color-tint: hsl(213, 99%, 50%);
   --color-dark: hsl(0, 1%, 25%);
   --color-light: hsl(0, 0, 95%);
   --color-gray-30: hsl(0, 1%, 30%);
   --color-gray-80: hsl(0, 1%, 80%);
   --color-gray-85: hsl(0, 1%, 85%);
+}
+
+platform-mac {
+  --color-tint: #0979ff; // mac blue
+
+  .ev-toolbar {
+    .ev-toolbar-item {
+      background: #fff;
+      border: 1px solid var(--color-gray-85);
+      border-radius: 5px;
+
+      &:active {
+        transform: scale(0.94);
+      }
+    }  
+  }
+
+}
+
+.platform-linux[class*="cinnamon"] {
+  --color-tint: #7db349; // linux mint green
+
+  .ev-toolbar {
+    background: #d9d9d9;
+    border-bottom: 1px solid #c9c9c9;
+
+    .ev-toolbar-item {
+      background: none;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      border-radius: 3px;
+
+      &:hover {
+        background: #f4f4f4;
+        border: 1px solid #bababa;
+      }
+      
+      &:active,
+      &.ev-active {
+        background: var(--color-tint);
+        color: #f4f4f4;
+        border: 1px solid #699440;
+  
+        .ev-icon svg {
+          fill: #f4f4f4;
+        }
+      }
+    }  
+  }
 }
 
 body,
@@ -17,7 +65,6 @@ textarea {
 
 .ev-pane-toolbar .ev-layout-pane {
   background: #eee;
-  border-bottom: 1px solid #ddd;
 }
 
 .ev-pane-main .ev-pane-editor .ev-layout-pane {
@@ -36,9 +83,6 @@ textarea {
   }
 
   .ev-toolbar-item {
-    background: #fff;
-    border: 1px solid var(--color-gray-85);
-    border-radius: 5px;
     color: var(--color-gray-30);
 
     .ev-icon svg {
