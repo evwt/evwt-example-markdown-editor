@@ -6,7 +6,7 @@
   --color-gray-85: hsl(0, 1%, 85%);
 }
 
-platform-mac {
+.platform-mac {
   --color-tint: #0979ff; // mac blue
 
   .ev-toolbar {
@@ -18,7 +18,7 @@ platform-mac {
       &:active {
         transform: scale(0.94);
       }
-    }  
+    }
   }
 
 }
@@ -40,18 +40,18 @@ platform-mac {
         background: #f4f4f4;
         border: 1px solid #bababa;
       }
-      
+
       &:active,
       &.ev-active {
         background: var(--color-tint);
         color: #f4f4f4;
         border: 1px solid #699440;
-  
+
         .ev-icon svg {
           fill: #f4f4f4;
         }
       }
-    }  
+    }
   }
 }
 
