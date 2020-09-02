@@ -20,7 +20,7 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
-    "evwt": "^0.0.17",
+    "evwt": "^0.0.18",
     "lodash": "^4.17.19",
     "markdown-it": "^11.0.0",
     "uuid": "^8.3.0",
