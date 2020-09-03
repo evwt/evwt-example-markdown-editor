@@ -29,7 +29,7 @@ async function bootstrapTest() {
   await app.start();
 
   // Add delay to help run tests on Linux
-  await new Promise(r => setTimeout(r, 200));
+  await new Promise(r => setTimeout(r, 2000));
 
   return app;
 }
