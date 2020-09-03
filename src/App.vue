@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { ipcRenderer } from 'electron';
 import { EvLayout, EvDropZone } from 'evwt/components';
 import Editor from '@/components/Editor';
 import Preview from '@/components/Preview';
@@ -92,7 +91,7 @@ export default {
       this.loaded = true;
     };
 
-    ipcRenderer.on('eeme:open-file', (event, { filePath, fileContents }) => {
+    electron.ipcRenderer.on('eeme:open-file', (event, { filePath, fileContents }) => {
       this.markdown = fileContents;
       this.filePath = filePath;
       this.$evmenu.get('save-file').enabled = true;
@@ -101,15 +100,15 @@ export default {
 
     this.$evmenu.$on('input:save-file', async () => {
       if (this.filePath) {
-        ipcRenderer.invoke('save-file', this.filePath, this.markdown);
+        electron.ipcRenderer.invoke('save-file', this.filePath, this.markdown);
       } else {
-        let filePath = await ipcRenderer.invoke('save-new-file', this.markdown);
+        let filePath = await electron.ipcRenderer.invoke('save-new-file', this.markdown);
         this.filePath = filePath;
       }
     });
 
     this.$evmenu.$on('input:new-window', () => {
-      ipcRenderer.invoke('new-window');
+      electron.ipcRenderer.invoke('new-window');
     });
   },
 
@@ -127,7 +126,7 @@ export default {
 
   methods: {
     async toggleDevtools() {
-      let opened = await ipcRenderer.invoke('eeme:devtools-toggle');
+      let opened = await electron.ipcRenderer.invoke('eeme:devtools-toggle');
       this.$set(this.activeToolbarItems, 'toggle-devtools', opened);
     },
 
@@ -145,7 +144,7 @@ export default {
 
     handleDrop(files) {
       if (files.length) {
-        ipcRenderer.invoke('file-dragged-in', files[0].path);
+        electron.ipcRenderer.invoke('file-dragged-in', files[0].path);
       }
     },
 

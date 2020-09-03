@@ -1,3 +1,4 @@
+import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { dialog } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
@@ -13,7 +14,10 @@ export function createWindow(restoreId = uuidv4()) {
     backgroundColor: '#ffffff',
     minHeight: 384,
     webPreferences: {
-      nodeIntegration: true
+      // Use pluginOptions.nodeIntegration, leave this alone
+      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      preload: path.join(__dirname, 'preload.js')
     }
   };
 

@@ -64,7 +64,7 @@ module.exports = {
           }
         ]
       },
-      nodeIntegration: true,
+      preload: 'src/preload.js',
       chainWebpackRendererProcess: (config) => {
         EvIcon.use(config);
       }

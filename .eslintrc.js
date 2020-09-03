@@ -5,8 +5,7 @@ module.exports = {
     mocha: true
   },
   globals: {
-    BigInt: true,
-    BigUint64Array: true
+    electron: true
   },
   extends: [
     'plugin:vue/recommended',
