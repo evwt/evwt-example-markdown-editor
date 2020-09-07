@@ -4,6 +4,9 @@
   --color-gray-30: hsl(0, 1%, 30%);
   --color-gray-80: hsl(0, 1%, 80%);
   --color-gray-85: hsl(0, 1%, 85%);
+  --color-gray-90: hsl(0, 1%, 90%);
+  --color-gray-95: hsl(0, 1%, 95%);
+  --color-gray-97: hsl(0, 1%, 97%);
 }
 
 .platform-mac {
@@ -60,11 +63,12 @@ input,
 textarea {
   font-family: system-ui;
   font-size: 13px;
-  color: var(--color-gray);
+  color: var(--color-dark);
 }
 
 .ev-pane-toolbar .ev-layout-pane {
   background: #eee;
+  border-bottom: 1px solid #ddd;
 }
 
 .ev-pane-main .ev-pane-editor .ev-layout-pane {
@@ -72,6 +76,7 @@ textarea {
 }
 
 .ev-pane-preview .ev-layout-pane {
+  background: #fff;
   border-left: 1px solid #ddd;
 }
 
